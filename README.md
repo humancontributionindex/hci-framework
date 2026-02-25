@@ -126,7 +126,7 @@ If you use the HCI in your research, please cite:
 ```bibtex
 @misc{hci-framework,
   title={The Human Contribution Index: A Framework for Measuring Authentic Human Intellectual Contribution in Research},
-  author={[Author Name]},
+  author={Simone Macario},
   year={2026},
   url={https://github.com/humancontributionindex/hci-framework}
 }
@@ -138,6 +138,5 @@ This work is licensed under the [MIT License](LICENSE).
 
 ## Contact
 
-- **Website:** [coming soon]
-- **Email:** [coming soon]
+- **Website:** [humancontribution.com](https://humancontribution.com/)
 - **Discussions:** Use [GitHub Discussions](../../discussions) for questions and ideas
