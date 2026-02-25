@@ -48,7 +48,7 @@ Where:
 ## Quick Start
 
 ### Manual Scoring
-Use the [detailed scoring rubric](rubric/hci-rubric.md) to assess a dissertation or research paper. Score each dimension 1-5 using the behavioral anchors provided, estimate the AI dependency factor, then compute:
+Use the [detailed scoring rubric](rubric/dimensions.md) to assess a dissertation or research paper. Score each dimension 1-5 using the behavioral anchors provided, estimate the AI dependency factor, then compute:
 
 ```python
 # Example: A strong dissertation with minor AI tool use
@@ -75,7 +75,7 @@ print(f"HCI Score: {hci_score:.2f}")  # HCI Score: 3.42
 
 ## Scoring Rubric
 
-The full scoring rubric with detailed behavioral anchors for each dimension is available in [`rubric/hci-rubric.md`](rubric/hci-rubric.md).
+The full scoring rubric with detailed behavioral anchors for each dimension is available in [`rubric/dimensions.md`](rubric/dimensions.md).
 
 ## Part of the CRQI Framework
 
