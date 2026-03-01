@@ -138,5 +138,5 @@ This work is licensed under the [MIT License](LICENSE).
 
 ## Contact
 
-- **Website:** [humancontribution.com](https://humancontribution.com/)
+- **Website:** [humancontributionindex.com](https://humancontributionindex.com/)
 - **Discussions:** Use [GitHub Discussions](../../discussions) for questions and ideas
