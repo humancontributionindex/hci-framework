@@ -1,92 +1,107 @@
 """
-Human Contribution Index (HCI) Calculator
+Human Contribution Index (HCI) Calculator — Framework 0.2.0
 
 A simple tool to compute HCI scores from manual dimension ratings.
+Scores are on a 0-100 scale with a three-tier classification.
 """
 
-# Dimension weights
+# Dimension weights (0.2.0)
 WEIGHTS = {
-    "conceptual_direction": 0.25,
-    "creative_synthesis": 0.25,
-    "critical_judgment": 0.20,
-    "ethical_reasoning": 0.15,
-    "scholarly_voice": 0.15,
+    "epistemic_agency": 0.35,
+    "cognitive_transformation": 0.25,
+    "methodological_autonomy": 0.20,
+    "original_synthesis": 0.15,
+    "metacognitive_oversight": 0.05,
+}
+
+DIMENSION_LABELS = {
+    "epistemic_agency": "Epistemic Agency",
+    "cognitive_transformation": "Cognitive Transformation",
+    "methodological_autonomy": "Methodological Autonomy",
+    "original_synthesis": "Original Synthesis",
+    "metacognitive_oversight": "Metacognitive Oversight",
 }
 
 
-def calculate_hci(scores: dict, ai_dependency: float = 0.0) -> dict:
+def calculate_hci(scores: dict) -> dict:
     """
     Calculate the Human Contribution Index score.
 
     Args:
-        scores: Dictionary with dimension names as keys and scores (1-5) as values.
-                Keys: conceptual_direction, creative_synthesis, critical_judgment,
-                      ethical_reasoning, scholarly_voice
-        ai_dependency: AI dependency factor (0.0 to 1.0).
-                       0.0 = no AI use, 1.0 = fully AI-generated.
+        scores: Dictionary with dimension keys and scores (1-5).
+                Keys: epistemic_agency, cognitive_transformation,
+                      methodological_autonomy, original_synthesis,
+                      metacognitive_oversight
 
     Returns:
-        Dictionary with weighted scores, weighted sum, and final HCI score.
+        Dictionary with weighted scores, composite score (0-100),
+        and classification tier.
     """
-    # Validate inputs
     for dim, score in scores.items():
         if dim not in WEIGHTS:
             raise ValueError(f"Unknown dimension: {dim}")
         if not 1 <= score <= 5:
-            raise ValueError(f"Score for {dim} must be between 1 and 5, got {score}")
-
-    if not 0.0 <= ai_dependency <= 1.0:
-        raise ValueError(f"AI dependency must be between 0.0 and 1.0, got {ai_dependency}")
+            raise ValueError(
+                f"Score for {dim} must be between 1 and 5, got {score}"
+            )
 
     if len(scores) != 5:
         missing = set(WEIGHTS.keys()) - set(scores.keys())
         raise ValueError(f"Missing dimensions: {missing}")
 
-    # Calculate weighted scores
     weighted = {dim: scores[dim] * WEIGHTS[dim] for dim in scores}
     weighted_sum = sum(weighted.values())
-    hci_score = weighted_sum * (1 - ai_dependency)
+    total_weight = sum(WEIGHTS.values())
+    normalized = weighted_sum / total_weight
+    hci_score = round(normalized * 20)
 
     return {
         "weighted_scores": weighted,
         "weighted_sum": round(weighted_sum, 2),
-        "ai_dependency": ai_dependency,
-        "hci_score": round(hci_score, 2),
+        "hci_score": hci_score,
+        "tier": classify(hci_score),
     }
 
 
-def interpret_hci(score: float) -> str:
-    """Return a human-readable interpretation of the HCI score."""
-    if score >= 4.0:
-        return "Exceptional human contribution"
-    elif score >= 3.0:
-        return "Strong human contribution"
-    elif score >= 2.0:
-        return "Moderate human contribution"
-    elif score >= 1.0:
-        return "Limited human contribution"
-    else:
-        return "Minimal human contribution"
+def classify(score: int) -> dict:
+    """Return the classification tier for a given HCI score."""
+    if score >= 80:
+        return {
+            "label": "High Agency",
+            "description": "The human author is clearly the intellectual architect of the work.",
+        }
+    if score >= 60:
+        return {
+            "label": "Hybrid",
+            "description": "A mix of human-led inquiry and significant reliance on AI for core intellectual tasks.",
+        }
+    return {
+        "label": "Low Agency",
+        "description": "The work is likely a product of AI generation with minimal human intellectual contribution.",
+    }
 
 
 # --- Example usage ---
 if __name__ == "__main__":
     example_scores = {
-        "conceptual_direction": 4,
-        "creative_synthesis": 3,
-        "critical_judgment": 4,
-        "ethical_reasoning": 4,
-        "scholarly_voice": 4,
+        "epistemic_agency": 4,
+        "cognitive_transformation": 3,
+        "methodological_autonomy": 4,
+        "original_synthesis": 4,
+        "metacognitive_oversight": 4,
     }
 
-    result = calculate_hci(example_scores, ai_dependency=0.15)
+    result = calculate_hci(example_scores)
 
-    print("=== Human Contribution Index (HCI) ===\n")
+    print("=== Human Contribution Index (HCI 0.2.0) ===\n")
     print("Dimension Scores:")
     for dim, score in example_scores.items():
-        label = dim.replace("_", " ").title()
-        print(f"  {label}: {score}/5 (weighted: {result['weighted_scores'][dim]:.2f})")
-    print(f"\nWeighted Sum: {result['weighted_sum']}")
-    print(f"AI Dependency: {result['ai_dependency']}")
-    print(f"HCI Score: {result['hci_score']}")
-    print(f"Interpretation: {interpret_hci(result['hci_score'])}")
+        label = DIMENSION_LABELS[dim]
+        weight_pct = f"{WEIGHTS[dim] * 100:.0f}%"
+        print(
+            f"  {label} ({weight_pct}): {score}/5 "
+            f"(weighted: {result['weighted_scores'][dim]:.2f})"
+        )
+    print(f"\nHCI Score: {result['hci_score']}/100")
+    print(f"Classification: {result['tier']['label']}")
+    print(f"  {result['tier']['description']}")

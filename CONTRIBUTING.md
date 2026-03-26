@@ -1,6 +1,6 @@
 # Contributing to the Human Contribution Index
 
-Thank you for your interest in contributing to the HCI framework. This is an open, community-driven project and we welcome contributions from researchers, educators, and practitioners across all disciplines.
+Thank you for your interest in contributing to the HCI framework (0.2.0). This is an open, community-driven project and we welcome contributions from researchers, educators, and practitioners across all disciplines.
 
 ## Ways to Contribute
 
@@ -22,6 +22,7 @@ Thank you for your interest in contributing to the HCI framework. This is an ope
 - Apply the rubric to research in your field and share your experience
 - Contribute scored assessments (anonymized) to help build validation datasets
 - Report inter-rater reliability findings
+- Compare your manual scores against the [automated scorer](https://humancontributionindex.com)
 
 ### 5. Case Studies
 - Document your experience using the HCI
