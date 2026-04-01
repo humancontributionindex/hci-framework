@@ -37,7 +37,7 @@ HCI = Σ(λⱼ × HCⱼ) / Σ(λⱼ) × 20
 Where:
 - `HCⱼ` = Dimension score (1–5 scale)
 - `λⱼ` = Dimension weight (see table above)
-- The result is a score from 0 to 100
+- Since each dimension is scored 1–5, the effective range is 20–100
 
 ### Classification
 
@@ -73,7 +73,7 @@ weights = {
 weighted_sum = sum(scores[d] * weights[d] for d in scores)
 total_weight = sum(weights.values())
 hci_score = round((weighted_sum / total_weight) * 20)
-print(f"HCI Score: {hci_score}/100")  # HCI Score: 74/100
+print(f"HCI Score: {hci_score}/100")  # HCI Score: 75/100
 ```
 
 ### Automated Scoring
@@ -127,7 +127,7 @@ This version introduces a significant evolution of the framework based on applie
 - **Dimensions reconceptualized:** From measuring "what the human contributed" to measuring "scholarly agency" — how much the human was the architect of the thinking
 - **Weights redistributed:** Epistemic Agency (asking the right questions) is now weighted highest at 35%
 - **AI dependency factor removed:** The framework no longer penalizes AI use — it only measures whether the thinking is human
-- **0–100 scoring scale:** Composite scores are now on a 0–100 scale instead of 0–5
+- **20–100 scoring scale:** Composite scores are now on a 20–100 scale instead of 0–5 (floor of 20 reflects that all dimensions have a minimum score of 1)
 - **3-tier classification added:** High Agency / Hybrid / Low Agency for clear, actionable results
 - **Standalone framework:** HCI is no longer positioned as a component of a larger CRQI system
 
@@ -140,7 +140,7 @@ If you use the HCI in your research, please cite:
 ```bibtex
 @misc{hci-framework,
   title={The Human Contribution Index: A Framework for Measuring Scholarly Agency in Research},
-  author={Macario, Simone and Casadio and Chan},
+  author={Macario, Simone and Casadio, Paolo and Chan, Paul},
   year={2026},
   url={https://github.com/humancontributionindex/hci-framework}
 }

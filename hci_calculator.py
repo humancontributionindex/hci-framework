@@ -2,7 +2,8 @@
 Human Contribution Index (HCI) Calculator — Framework 0.2.0
 
 A simple tool to compute HCI scores from manual dimension ratings.
-Scores are on a 0-100 scale with a three-tier classification.
+Scores are on a 20-100 scale with a three-tier classification.
+(Floor of 20 because each dimension has a minimum score of 1.)
 """
 
 # Dimension weights (0.2.0)
@@ -35,7 +36,7 @@ def calculate_hci(scores: dict) -> dict:
 
     Returns:
         Dictionary with weighted scores, composite score (0-100),
-        and classification tier.
+        and classification tier.  Score range is 20-100.
     """
     for dim, score in scores.items():
         if dim not in WEIGHTS:
@@ -51,7 +52,7 @@ def calculate_hci(scores: dict) -> dict:
 
     weighted = {dim: scores[dim] * WEIGHTS[dim] for dim in scores}
     weighted_sum = sum(weighted.values())
-    total_weight = sum(WEIGHTS.values())
+    total_weight = sum(WEIGHTS.values())  # 1.0 today; kept for safety if weights change
     normalized = weighted_sum / total_weight
     hci_score = round(normalized * 20)
 
